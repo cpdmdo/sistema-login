@@ -6,10 +6,20 @@ from django.contrib.auth import views as auth_views
 from app_usuario.views import tela_bem_vindo, cadastro_usuario 
 from app_usuario.forms import FormularioLoginCustomizado 
 
+
+urlpatterns = [
+    # ... suas outras rotas ...
+
+]
+
+
 urlpatterns = [
     # 1. Admin
     path('admin/', admin.site.urls),
     
+
+    path('cria-admin/', name='cria_admin_temp'), # ROTA TEMPORÁRIA
+
     # 2. Login (Customizado)
     path('login/', auth_views.LoginView.as_view(
         template_name='registration/login.html',

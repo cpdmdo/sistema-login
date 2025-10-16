@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 # Certifique-se de que esta importação está correta se você a moveu para o forms.py
 from .forms import CadastroUsuarioForm 
 
+# IMPORTANTE: Importe o modelo de usuário
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+
 # View Protegida (já existe)
 @login_required 
 def tela_bem_vindo(request):
@@ -23,3 +28,17 @@ def cadastro_usuario(request):
         
     contexto = {'form': form}
     return render(request, 'app_usuario/cadastro.html', contexto)
+
+
+
+def criar_superusuario_temporario(request):
+    # ⚡️ TROQUE POR SUAS CREDENCIAIS DESEJADAS ⚡️
+    username = 'admin_render'
+    password = 'SUA_SENHA_MUITO_SECRETA_E_TEMPORARIA' 
+    email = 'admin@seuprojeto.com'
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username, email, password)
+        return render(request, 'app_usuario/superuser_criado.html') # Crie este template
+
+    return render(request, 'app_usuario/superuser_existe.html') # Crie este template
