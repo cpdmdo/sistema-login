@@ -33,8 +33,8 @@ def cadastro_usuario(request):
 
 def criar_superusuario_temporario(request):
     # ⚡️ TROQUE POR SUAS CREDENCIAIS DESEJADAS ⚡️
-    username = 'admin_render'
-    password = 'SUA_SENHA_MUITO_SECRETA_E_TEMPORARIA' 
+    username = 'cpd1'
+    password = 'Teste@123' 
     email = 'admin@seuprojeto.com'
 
     if not User.objects.filter(username=username).exists():

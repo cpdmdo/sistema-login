@@ -3,9 +3,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views 
 
 # Importe todas as Views e Formulários
-from app_usuario.views import tela_bem_vindo, cadastro_usuario 
-from app_usuario.forms import FormularioLoginCustomizado 
-
+from app_usuario.views import tela_bem_vindo, cadastro_usuario, criar_superusuario_temporario 
+from app_usuario.forms import FormularioLoginCustomizado
 
 urlpatterns = [
     # ... suas outras rotas ...
@@ -18,7 +17,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
 
-    path('cria-admin/', name='cria_admin_temp'), # ROTA TEMPORÁRIA
+    path('cria-admin/', criar_superusuario_temporario, name='cria_admin_temp'),
 
     # 2. Login (Customizado)
     path('login/', auth_views.LoginView.as_view(
