@@ -1,0 +1,15 @@
+# Pastas de ambiente virtual
+venv/
+__pycache__/
+*.pyc
+
+# Pasta de arquivos estáticos gerada pelo collectstatic
+staticfiles/
+
+# Arquivos de banco de dados local
+db.sqlite3
+
+# Logs de debug e arquivos de cache
+*.log
+.DS_Store
+.vscode/

@@ -1,0 +1,35 @@
+/* 1. Estilo para o Botão Principal (por exemplo, no Login e Cadastro) */
+/* Sobrescreve a cor de fundo padrão (ex: azul do .btn-primary) */
+.btn-primary, .btn-success {
+    background-color: #006060 !important; /* Cor de fundo definida: #006060 */
+    border-color: #006060 !important;    /* Garante que a borda tenha a mesma cor */
+    color: #ffffff;                      /* Define a cor do texto como branco para contraste */
+}
+
+/* 2. Estilo quando o botão é pressionado (Hover/Foco) */
+/* É essencial para garantir que a cor persista e o botão tenha feedback visual */
+.btn-primary:hover, .btn-success:hover,
+.btn-primary:focus, .btn-success:focus,
+.btn-primary:active, .btn-success:active {
+    background-color: #007979 !important; /* Um tom ligeiramente mais claro ou escuro para o efeito hover */
+    border-color: #007979 !important;
+    color: #ffffff;
+}
+
+/* 3. Estilo para o botão de Logout (que geralmente é .btn-outline-danger) */
+/* Isso garante que todos os botões que você usa fiquem com a nova cor */
+.btn-outline-danger {
+    color: #006060; /* Cor do texto no botão outline */
+    border-color: #006060; /* Cor da borda */
+}
+
+.btn-outline-danger:hover {
+    background-color: #006060; /* Cor de fundo no hover */
+    color: #ffffff;
+}
+
+/* Regra abrangente (caso use apenas .btn sem cor específica, mas não é comum no Bootstrap) */
+.btn {
+    /* Garante que o texto seja sempre legível contra o fundo escuro */
+    color: #ffffff; 
+}   

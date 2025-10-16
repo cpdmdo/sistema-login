@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Bem-Vindo{% endblock title %}
+
+{% block content %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Login Efetuado com Sucesso!</h4>
+    <p>Olá, **{{ user.username }}**! Seja bem-vindo ao painel principal do sistema.</p>
+    <hr>
+    <p class="mb-0">Aqui você terá acesso aos módulos integrados. Este é um ambiente seguro.</p>
+</div>
+
+
+
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+
+    <button type="submit" class="btn btn-outline-danger mt-3">
+        Sair do Sistema (Logout)
+    </button>
+</form>
+
+{% endblock content %}
