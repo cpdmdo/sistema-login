@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,6 +86,14 @@ DATABASES = {
     }
 }
 
+# ⚡️ BLOCO CRÍTICO PARA PRODUÇÃO NO RENDER ⚡️
+# Se o DEBUG estiver False (produção) E a DATABASE_URL estiver definida (no Render)
+if not DEBUG and os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600  # Tempo de vida máximo da conexão
+    )
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
