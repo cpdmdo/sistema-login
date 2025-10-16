@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-9&7^@j+ubz&wj(ozeg_&g3v@pfjpio6+*c3hh0i413#lsxy^_e"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['127.0.0.1', '.onrender.com'] # Permite o acesso pelo seu domínio Render
 
@@ -86,6 +86,33 @@ DATABASES = {
     }
 }
 
+
+
+# Mantenha o seu DATABASES padrão local (SQLite)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# ⚡️ BLOCO CRÍTICO DE PRODUÇÃO ⚡️
+# Tenta obter a URL do Render
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # Se a URL do banco de dados do Render existir, use-a.
+    DATABASES['default'] = dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600
+    )
+    # E DEFINA DEBUG PARA FALSE AQUI para garantir a segurança em produção
+    DEBUG = False 
+else:
+    # Se DATABASE_URL não estiver definida, DEBUG permanece True (para o desenvolvimento local)
+    DEBUG = True
+
+
 # ⚡️ BLOCO CRÍTICO PARA PRODUÇÃO NO RENDER ⚡️
 # Se o DEBUG estiver False (produção) E a DATABASE_URL estiver definida (no Render)
 if not DEBUG and os.environ.get('DATABASE_URL'):
@@ -93,7 +120,7 @@ if not DEBUG and os.environ.get('DATABASE_URL'):
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600  # Tempo de vida máximo da conexão
     )
-    
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
