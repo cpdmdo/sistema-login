@@ -1,44 +1,33 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
 # Certifique-se de que esta importação está correta se você a moveu para o forms.py
-from .forms import CadastroUsuarioForm 
+from .forms import CadastroUsuarioForm
 
 # IMPORTANTE: Importe o modelo de usuário
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 
 # View Protegida (já existe)
-@login_required 
+@login_required
 def tela_bem_vindo(request):
-    contexto = {
-        'usuario': request.user.username 
-    }
-    return render(request, 'app_usuario/bem_vindo.html', contexto)
+    contexto = {"usuario": request.user.username}
+    return render(request, "app_usuario/bem_vindo.html", contexto)
+
 
 # ⚡️ ESTA FUNÇÃO DEVE ESTAR PRESENTE! ⚡️
 def cadastro_usuario(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CadastroUsuarioForm(request.POST)
         if form.is_valid():
-            form.save() 
-            return redirect('login') 
+            form.save()
+            return redirect("login")
     else:
         form = CadastroUsuarioForm()
-        
-    contexto = {'form': form}
-    return render(request, 'app_usuario/cadastro.html', contexto)
 
+    contexto = {"form": form}
+    return render(request, "app_usuario/cadastro.html", contexto)
 
-
-def criar_superusuario_temporario(request):
-    # ⚡️ TROQUE POR SUAS CREDENCIAIS DESEJADAS ⚡️
-    username = 'cpd1'
-    password = 'Teste@123' 
-    email = 'admin@seuprojeto.com'
-
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username, email, password)
-        return render(request, 'app_usuario/superuser_criado.html') # Crie este template
-
-    return render(request, 'app_usuario/superuser_existe.html') # Crie este template
+    return render(request, "app_usuario/superuser_existe.html")  # Crie este template

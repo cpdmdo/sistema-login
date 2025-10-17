@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
 import dj_database_url
 from pathlib import Path
@@ -24,9 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-9&7^@j+ubz&wj(ozeg_&g3v@pfjpio6+*c3hh0i413#lsxy^_e"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ['127.0.0.1', '.onrender.com'] # Permite o acesso pelo seu domínio Render
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    ".onrender.com",
+]  # Permite o acesso pelo seu domínio Render
 
 
 # Application definition
@@ -43,7 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -57,7 +61,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -87,7 +91,7 @@ DATABASES = {
 }
 
 
-
+"""
 # Mantenha o seu DATABASES padrão local (SQLite)
 DATABASES = {
     'default': {
@@ -95,19 +99,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
 
 # ⚡️ BLOCO CRÍTICO DE PRODUÇÃO ⚡️
 # Tenta obter a URL do Render
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
     # Se a URL do banco de dados do Render existir, use-a.
-    DATABASES['default'] = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600
+    DATABASES["default"] = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=600
     )
     # E DEFINA DEBUG PARA FALSE AQUI para garantir a segurança em produção
-    DEBUG = False 
+    DEBUG = False
 else:
     # Se DATABASE_URL não estiver definida, DEBUG permanece True (para o desenvolvimento local)
     DEBUG = True
@@ -115,10 +119,10 @@ else:
 
 # ⚡️ BLOCO CRÍTICO PARA PRODUÇÃO NO RENDER ⚡️
 # Se o DEBUG estiver False (produção) E a DATABASE_URL estiver definida (no Render)
-if not DEBUG and os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600  # Tempo de vida máximo da conexão
+if not DEBUG and os.environ.get("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,  # Tempo de vida máximo da conexão
     )
 
 
@@ -160,21 +164,20 @@ STATIC_URL = "static/"
 
 # Ela diz ao Django para procurar arquivos estáticos dentro da pasta 'static' na raiz do projeto
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # ⚡️ NOVO: Local onde os arquivos estáticos serão coletados para produção ⚡️
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_URL = '/login/'
+LOGIN_URL = "/login/"
 
-LOGIN_REDIRECT_URL = '/bem_vindo/' # URL da nossa futura tela de boas-vindas
+LOGIN_REDIRECT_URL = "/bem_vindo/"  # URL da nossa futura tela de boas-vindas
 
 # ⚡️ NOVO: Onde o Django redireciona após um logout (vamos para a tela de login) ⚡️
-LOGOUT_REDIRECT_URL = '/login/'
-
+LOGOUT_REDIRECT_URL = "/login/"
